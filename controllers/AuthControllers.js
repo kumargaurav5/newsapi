@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 import bcrypt from "bcrypt"
 import {errorFomatter} from "../utils/helper.js";
 import jwt from "jsonwebtoken"
+import { sendEmail } from "../config/mailer.js";
 
 class AuthController {
     static async register(req, res) {
@@ -82,6 +83,22 @@ class AuthController {
             } else {
                 return res.status(500).json({ message: "Something went wrong" })
             }
+        }
+
+    }
+
+    static async sendTestEmail(req, res){
+        try{
+            const {email} = req.query
+            const payload ={
+                toEmail:email,
+                subject:"Hey I am good",
+                body:"<h1>I am Kumar Gaurav. wish you all the best . See you in future.</h1>"
+            }
+            await sendEmail(payload.toEmail, payload.subject , payload.body)
+            return res.status(200).json({message:"Email Sent"})
+        }catch(error){
+            return res.status(500).json({message:"Something went wrong" , error:error})
         }
 
     }

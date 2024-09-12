@@ -3,15 +3,16 @@ import { newSchema } from "../validations/newsValidation.js"
 import { errorFomatter, generateUniqueid, imagevaliditor, removeImage, uploadImage } from "../utils/helper.js"
 import prisma from "../DB/db.config.js"
 import NewsApiTransform from "../transform/newsApiTransform.js"
+import redisCache from "../DB/redis.config.js"
 
 class NewController {
     static async index(req, res) {
-        const page = Number(req.query.page) || 1
-        const limit = Number(req.query.limit) || 15
+        let page = Number(req.query.page) || 1
+        let limit = Number(req.query.limit) || 15
         if (page <= 0) {
             page = 1
         }
-
+        console.log(limit)
         if (limit <= 0 || limit > 15) {
             limit = 15
         }
@@ -71,6 +72,11 @@ class NewController {
 
             const news = await prisma.news.create({
                 data: payload
+            })
+
+            //remove cache of redis
+            redisCache.del("api/news", (err)=>{
+                throw err
             })
 
 
