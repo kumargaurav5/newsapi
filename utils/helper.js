@@ -1,5 +1,5 @@
 import { supportMimes } from "../config/filesystem.js";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid"
 
 function errorFomatter(error) {
   let errors;
@@ -13,15 +13,16 @@ function errorFomatter(error) {
 
 
 function bytesToMb(bytes) {
-  return bytes / 1024
+  return bytes / (1024 * 1024)
 }
 
 function imagevaliditor(size, mime) {
   if (bytesToMb(size) > 2) {
+    console.log(bytesToMb(size), size)
     return "Image size must be less than 2 MB"
   }
 
-  else if(!supportMimes.includes(mime)){
+  else if (!supportMimes.includes(mime)) {
     return "Image must be type of png, jpg,jpeg ,svg,webp, gif"
   }
 
@@ -29,8 +30,13 @@ function imagevaliditor(size, mime) {
 
 }
 
-function  generateUniqueid(){
+function generateUniqueid() {
   return uuidv4()
 }
 
-export { errorFomatter, imagevaliditor ,generateUniqueid}
+function getImageUrl (imageName) {
+  console.log()
+  return `${process.env.APP_URL}/images/${imageName}`
+}
+
+export { errorFomatter, imagevaliditor, generateUniqueid ,getImageUrl}
