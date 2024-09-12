@@ -22,7 +22,6 @@ class ProfileController {
 
             const profile = req.files.profile
             const message = imagevaliditor(profile?.size, profile?.mimetype)
-            console.log(message)
             if (message === null) {
                 const imgExt = profile?.name.split(".")
                 const imageName = generateUniqueid() + "." + imgExt[1]

@@ -1,5 +1,6 @@
 import { supportMimes } from "../config/filesystem.js";
 import { v4 as uuidv4 } from "uuid"
+import fs from "fs"
 
 function errorFomatter(error) {
   let errors;
@@ -39,4 +40,23 @@ function getImageUrl (imageName) {
   return `${process.env.APP_URL}/images/${imageName}`
 }
 
-export { errorFomatter, imagevaliditor, generateUniqueid ,getImageUrl}
+function removeImage(imageName){
+  const path = process.cwd()+"/public/images/"+imageName
+  if(fs.existsSync(path)){
+    fs.unlinkSync(path)
+  }
+  console.log("image removed susscessfully")
+  return
+}
+
+function uploadImage(image){
+  const imgExt = image?.name.split(".")
+  const imageName = generateUniqueid() + "." + imgExt[1]
+  const uploadPath = process.cwd() + "/public/images/" + imageName
+  image.mv(uploadPath, (err) => {
+      if (err) throw err
+  })
+  return imageName
+}
+
+export { errorFomatter, imagevaliditor, generateUniqueid ,getImageUrl,removeImage,uploadImage}

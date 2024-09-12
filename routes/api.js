@@ -18,8 +18,8 @@ router.post("/profile/:id" , authMiddleware , ProfileController.update)
 router.get("/news" , NewController.index)
 router.post("/news" ,authMiddleware,  NewController.store)
 router.get("/news/:id" , NewController.show)
-// router.put("/news/:id" ,NewController.update)
-// router.delete("/news/:id" , NewController.destroy)
+router.put("/news/:id" ,authMiddleware, NewController.update)
+router.delete("/news/:id" ,authMiddleware, NewController.destroy)
 
 
 export default router
