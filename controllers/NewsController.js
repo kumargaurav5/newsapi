@@ -74,9 +74,11 @@ class NewController {
                 data: payload
             })
 
-            //remove cache of redis
-            redisCache.del("api/news", (err)=>{
-                throw err
+            // remove cache of redis
+            redisCache.del("api/news", (err,res)=>{
+                if(err){
+                    throw err
+                }
             })
 
 

@@ -22,6 +22,7 @@ class ProfileController {
             }
 
             const profile = req.files.profile
+            console.log(id)
             const message = imagevaliditor(profile?.size, profile?.mimetype)
             if (message === null) {
                 const imgExt = profile?.name.split(".")
