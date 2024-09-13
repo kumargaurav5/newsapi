@@ -12,6 +12,7 @@ class ProfileController {
         }
 
     }
+    
 
     static async update(req, res) {
         try {

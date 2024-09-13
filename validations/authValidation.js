@@ -13,3 +13,7 @@ export const loginSchema = z.object({
     email: z.string({ message: "email  is required" }).email({ message: "Invalid email address" }),
     password: z.string({ message: "password is required" })
 });
+
+
+export const mailSchema = z.string({ message: "email  is required" }).email({ message: "Invalid email address" })
+

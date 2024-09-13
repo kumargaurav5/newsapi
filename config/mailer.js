@@ -18,5 +18,4 @@ export const sendEmail = async (toMail ,subject ,body) => {
         subject: subject ,
         html: body
     });
-    console.log("h3jfbuwjqrfgbuo")
 }
